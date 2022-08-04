@@ -1,24 +1,29 @@
 // Imports omitted
 
 export const ProtectedRoutes = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-    
-  const { accessToken } = useSelector(state => state.auth); // Fetch access token from state
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const { data, isError } = useRefreshAccessTokenQuery(); 
+    const {
+        accessToken
+    } = useSelector(state => state.auth); // Fetch access token from state
 
-  if (isError) {
-    navigate('/login');
-  }
+    const {
+        data,
+        isError
+    } = useRefreshAccessTokenQuery();
 
-  useEffect(() => {
-    if (data) {
-      dispatch(setCredentials(data));
+    if (isError) {
+        navigate('/login');
     }
-  }, [data, dispatch]);
 
-  if (accessToken) return <Outlet />; 
+    useEffect(() => {
+        if (data) {
+            dispatch(setCredentials(data));
+        }
+    }, [data, dispatch]);
 
-  return <h1>Loading...</h1>;
+    if (accessToken) return < Outlet / > ;
+
+    return < h1 > Loading... < /h1>;
 };
